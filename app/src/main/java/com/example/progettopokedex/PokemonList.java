@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class PokemonList extends Fragment {
+    String[] mioArray = {"pippo","pluto","paperino","minny","pippo","pluto","paperino","minny","pippo","pluto","paperino","minny","pippo","pluto","paperino","minny","pippo","pluto","paperino","minny"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +64,19 @@ public class PokemonList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+
+        View contentView = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+
+        ListView listView = contentView.findViewById(R.id.pokemonListView);
+
+        ArrayAdapter<String> mioAdapter = new ArrayAdapter<>(
+                this.getContext(),
+                android.R.layout.simple_list_item_1,
+                mioArray
+        );
+
+        listView.setAdapter(mioAdapter);
+
+        return  contentView;
     }
 }
