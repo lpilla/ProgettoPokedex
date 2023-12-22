@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_pokemon_list"
+        android:title="All Pokemons"
+        android:icon="@drawable/icons8_pokeball_18___"/>
+    <item
+    android:id="@+id/nav_pokemon_favourites"
+    android:title="Favourites"
+    android:icon="@drawable/icons8_pokeball_18___"/>
+
+</menu>
