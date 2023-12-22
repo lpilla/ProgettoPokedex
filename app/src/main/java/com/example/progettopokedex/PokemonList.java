@@ -4,11 +4,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.progettopokedex.data.PostAsyncResponse;
+import com.example.progettopokedex.data.Repository;
+import com.example.progettopokedex.models.PokemonShortResponse;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,15 +75,36 @@ public class PokemonList extends Fragment {
 
         View contentView = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
 
-        ListView listView = contentView.findViewById(R.id.pokemonListView);
 
-        ArrayAdapter<String> mioAdapter = new ArrayAdapter<>(
-                this.getContext(),
-                android.R.layout.simple_list_item_1,
-                mioArray
-        );
+        new Repository().getPosts(new PostAsyncResponse() {
+            @Override
+            public void processoterminato(ArrayList<PokemonShortResponse> pokemons) {
+                ListView listView = contentView.findViewById(R.id.pokemonListView);
+                ArrayAdapter<PokemonShortResponse> arrayAdapter = new ArrayAdapter<PokemonShortResponse>(
+                        contentView.getContext(),
+                        android.R.layout.simple_list_item_2,
+                        android.R.id.text1,
+                        pokemons
+                ){
+                    public View getView(int position, View convertView,ViewGroup parent) {
+                        View view = super.getView(position,convertView,parent);
+                        TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                        TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                        text1.setText(pokemons.get(position).getName());
+                        String id = String.valueOf(pokemons.get(position).getId());
+                        text2.setText(id);
+                        return view;
+                    }
 
-        listView.setAdapter(mioAdapter);
+                };
+                listView.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void processoFallito(Exception e) {
+                Log.d("Errore", e.getMessage());
+            }
+        });
 
         return  contentView;
     }
