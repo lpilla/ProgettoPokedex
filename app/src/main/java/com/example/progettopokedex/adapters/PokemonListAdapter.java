@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettopokedex.R;
 import com.example.progettopokedex.models.PokemonShortResponse;
+import com.example.progettopokedex.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,7 +51,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         public void bind(PokemonShortResponse pokemon) {
             pokemonListItemTitle.setText(pokemon.getName());
-            // TODO: 12/30/2023 setImage
+            String pokemonImage = Utils.getUrlImageOfPokemon(pokemon.getId());
+            Picasso.get().load(pokemonImage).resize(150,0).into(pokemonListItemImage);
         }
     }
 
