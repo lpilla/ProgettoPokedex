@@ -53,6 +53,11 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         public void bind(PokemonShortResponse pokemon) {
             pokemonListItemTitle.setText(pokemon.getName());
+            if (pokemon.isFavourite()){
+                bookmarkImage.setImageResource(R.drawable.bookmark_full);
+            } else{
+                bookmarkImage.setImageResource(R.drawable.bookmark_rounded);
+            }
             String pokemonImage = Utils.getUrlImageOfPokemon(pokemon.getId());
             itemView.setOnClickListener(v -> {
                 pokemon.setFavourite(!pokemon.isFavourite());
