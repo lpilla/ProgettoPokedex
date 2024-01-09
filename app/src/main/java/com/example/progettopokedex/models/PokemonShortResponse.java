@@ -5,10 +5,20 @@ public class PokemonShortResponse {
     private String url;
     private int id;
 
+    private boolean favourite;
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
     public PokemonShortResponse(String name, String url) {
         this.name = name;
         this.url = url;
-
+        this.favourite = false;
         int lastSlashIndex = url.lastIndexOf('/');
         String urlSenzaSlash=url.substring(0,lastSlashIndex);
         lastSlashIndex = urlSenzaSlash.lastIndexOf('/');

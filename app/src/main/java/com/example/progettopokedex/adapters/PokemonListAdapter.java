@@ -41,17 +41,27 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         private ImageView pokemonListItemImage;
         private TextView pokemonListItemTitle;
+        private ImageView bookmarkImage;
 
         public PokemonListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             pokemonListItemImage = itemView.findViewById(R.id.pokemon_list_item_image);
             pokemonListItemTitle = itemView.findViewById(R.id.pokemon_list_item_title);
+            bookmarkImage = itemView.findViewById(R.id.bookmarkImage);
         }
 
         public void bind(PokemonShortResponse pokemon) {
             pokemonListItemTitle.setText(pokemon.getName());
             String pokemonImage = Utils.getUrlImageOfPokemon(pokemon.getId());
+            itemView.setOnClickListener(v -> {
+                pokemon.setFavourite(!pokemon.isFavourite());
+                if (pokemon.isFavourite()){
+                    bookmarkImage.setImageResource(R.drawable.bookmark_full);
+                } else{
+                    bookmarkImage.setImageResource(R.drawable.bookmark_rounded);
+                }
+            });
             Picasso.get().load(pokemonImage).resize(150,0).into(pokemonListItemImage);
         }
     }
