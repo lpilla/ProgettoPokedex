@@ -1,10 +1,15 @@
 package com.example.progettopokedex.models;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class PokemonShortResponse {
+import java.io.Serializable;
+
+@Entity(tableName = "pokemon_table")
+public class PokemonShortResponse implements Serializable {
+    @PrimaryKey
+    private int id;
     private String name;
     private String url;
-    private int id;
-
     private boolean favourite;
 
     public boolean isFavourite() {

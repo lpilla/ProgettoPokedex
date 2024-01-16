@@ -3,10 +3,19 @@ package com.example.progettopokedex;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.progettopokedex.adapters.PokemonListAdapter;
+import com.example.progettopokedex.data.PokemonRepository;
+import com.example.progettopokedex.models.PokemonShortResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +67,24 @@ public class FavouritesList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        PokemonRepository repo = new PokemonRepository(requireActivity().getApplication());
+        ArrayList<PokemonShortResponse>list = new ArrayList<>();
+
+        View contentView = inflater.inflate(R.layout.fragment_favourites_list, container, false);
+        RecyclerView listView = contentView.findViewById(R.id.pokemonFavourite);
+
+        repo.getAllPokemon().observe(getViewLifecycleOwner(), new Observer<List<PokemonShortResponse>>() {
+            @Override
+            public void onChanged(List<PokemonShortResponse> pokemonShortResponses) {
+                list.clear();
+                list.addAll(pokemonShortResponses);
+                PokemonListAdapter adapter = new PokemonListAdapter(list, requireActivity().getApplication());
+                listView.setAdapter(adapter);
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favourites_list, container, false);
+        return contentView;
     }
 }

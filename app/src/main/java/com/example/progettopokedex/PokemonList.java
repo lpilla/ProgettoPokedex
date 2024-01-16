@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.progettopokedex.adapters.PokemonListAdapter;
+import com.example.progettopokedex.data.PokemonRepository;
 import com.example.progettopokedex.data.PostAsyncResponse;
 import com.example.progettopokedex.data.Repository;
 import com.example.progettopokedex.models.PokemonShortResponse;
@@ -73,6 +71,7 @@ public class PokemonList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
 
         View contentView = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
@@ -82,8 +81,8 @@ public class PokemonList extends Fragment {
             @Override
             public void processoterminato(ArrayList<PokemonShortResponse> pokemons) {
                 RecyclerView listView = contentView.findViewById(R.id.pokemonListView);
-                PokemonListAdapter arrayAdapter = new PokemonListAdapter(pokemons);
-                listView.setAdapter(arrayAdapter);
+                PokemonListAdapter adapter = new PokemonListAdapter(pokemons, requireActivity().getApplication());
+                listView.setAdapter(adapter);
             }
 
             @Override
