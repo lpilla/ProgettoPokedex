@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pokemonListView"
+
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".FavouritesList">
+
+<SearchView
+    android:id="@+id/searchView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:context=".PokemonList"
-    tools:listitem="@layout/pokem_list_item" />
+    android:layout_height="wrap_content"
+    app:iconifiedByDefault="false"
+    android:queryHint="Search Pokemon"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pokemonListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchView"
+        android:layout_marginTop="0dp"
+        android:padding="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".PokemonList"
+        tools:listitem="@layout/pokem_list_item" />
+</RelativeLayout>

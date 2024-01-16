@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.progettopokedex.adapters.PokemonListAdapter;
 import com.example.progettopokedex.data.PokemonRepository;
@@ -83,6 +84,19 @@ public class PokemonList extends Fragment {
                 RecyclerView listView = contentView.findViewById(R.id.pokemonListView);
                 PokemonListAdapter adapter = new PokemonListAdapter(pokemons, requireActivity().getApplication());
                 listView.setAdapter(adapter);
+                SearchView searchView = contentView.findViewById(R.id.searchView);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        adapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
             }
 
             @Override
@@ -90,7 +104,6 @@ public class PokemonList extends Fragment {
                 Log.d("Errore", e.getMessage());
             }
         });
-
         return  contentView;
     }
 }

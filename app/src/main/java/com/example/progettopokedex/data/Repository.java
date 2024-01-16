@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Repository {
 
     public void getPosts(final PostAsyncResponse callback){
-        String urlPost ="https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+        String urlPost ="https://pokeapi.co/api/v2/pokemon?limit=10&offset=0";
 
         ArrayList<PokemonShortResponse> pokemons = new ArrayList<>();
 

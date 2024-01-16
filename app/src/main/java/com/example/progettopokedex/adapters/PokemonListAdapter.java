@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,13 +25,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonListViewHolder> {
+public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonListViewHolder> implements Filterable {
     private final ArrayList<PokemonShortResponse> pokemons;
+
+    private ArrayList<PokemonShortResponse> filteredPokemons; // Add filtered list
     private static PokemonRepository pokemonRepository; // Add reference to the repository
 
 
     public PokemonListAdapter(ArrayList<PokemonShortResponse> pokemons, Application application) {
         this.pokemons = pokemons;
+        this.filteredPokemons = new ArrayList<>(pokemons); // Initialize with original list
         this.pokemonRepository = new PokemonRepository(application);
     }
 
@@ -45,6 +50,35 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     public int getItemCount(){
         return pokemons.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                ArrayList<PokemonShortResponse> filteredList = new ArrayList<>();
+
+                for (PokemonShortResponse pokemon : pokemons) {
+                    if (pokemon.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(pokemon);
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredPokemons.clear();
+                filteredPokemons.addAll((List<PokemonShortResponse>) filterResults.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 
     static class PokemonListViewHolder extends RecyclerView.ViewHolder{
