@@ -15,9 +15,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Repository {
-    String urlPost ="https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
 
     public void getPosts(final PostAsyncResponse callback){
+        String urlPost ="https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+
         ArrayList<PokemonShortResponse> pokemons = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,urlPost,null, response -> {
@@ -41,6 +42,5 @@ public class Repository {
         });
 
         AppController.getInstance().addToRequestQueue(request);
-
     }
 }
